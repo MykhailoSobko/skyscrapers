@@ -2,6 +2,7 @@
 This is the main module of the game.
 https://github.com/MykhailoSobko/skyscrapers
 """
+
 def read_input(path: str) -> list:
     """
     Read game board file from path.
