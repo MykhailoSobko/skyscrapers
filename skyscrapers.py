@@ -30,7 +30,10 @@ def left_to_right_check(input_line: str, pivot: int) -> bool:
     >>> left_to_right_check("452453*", 5)
     False
     """
-    pass
+    if input_line[0] == str(pivot):
+        return True
+
+    return False
 
 
 def check_not_finished_board(board: list) -> bool:
@@ -46,8 +49,8 @@ def check_not_finished_board(board: list) -> bool:
     >>> check_not_finished_board(['***21**', '412453*', '423145*', '*5?3215', '*35214*', '*41532*', '*2*1***'])
     False
     """
-    for row in board:
-        if '*' in row:
+    for row in board[1:-1]:
+        if '?' in row[1:-1]:
             return False
 
     return True
@@ -66,14 +69,10 @@ def check_uniqueness_in_rows(board: list) -> bool:
     >>> check_uniqueness_in_rows(['***21**', '412453*', '423145*', '*553215', '*35214*', '*41532*', '*2*1***'])
     False
     """
-    for row in board:
-        i = 0
-        while i < len(row):
-            j = i+1
-            while j < len(row):
-                if row[i] == row[j]:
-                    return False
-            i += 1
+    for row in board[1:-1]:
+        for building in row[1:-1]:
+            if row[1:-1].index(building) != row[1:-1].rindex(building):
+                return False
 
     return True
 
@@ -93,7 +92,32 @@ def check_horizontal_visibility(board: list):
     >>> check_horizontal_visibility(['***21**', '452413*', '423145*', '*543215', '*35214*', '*41532*', '*2*1***'])
     False
     """
-    pass
+    for row in board[1:-1]:
+        if row[0].isnumeric():
+            pivot = int(row[0])
+            row = row[1:-1]
+            count = 1
+            highest = int(row[0])
+            for i, _ in enumerate(row):
+                if int(row[i]) > highest:
+                    highest = int(row[i])
+                    count += 1
+            if count != pivot:
+                return False
+
+        elif row[-1].isnumeric():
+            pivot = int(row[-1])
+            row = row[1:-1]
+            count = 1
+            highest = int(row[-1])
+            for i, _ in reversed(list(enumerate(row))):
+                if int(row[i]) > highest:
+                    highest = int(row[i])
+                    count +=1
+            if count != pivot:
+                return False
+
+    return True
 
 
 def check_columns(board: list):
