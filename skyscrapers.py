@@ -4,7 +4,7 @@ def read_input(path: str) -> list:
     Return list of str.
 
     >>> read_input("check.txt")
-    ['***21**', '452453*', '423145*', '*543215', '*35214*', '*41532*', '*2*1***']
+    ['***21**', '412453*', '423145*', '*543215', '*35214*', '*41532*', '*2*1***']
     """
     board = []
     file = open(path, mode='r', encoding='utf-8')
