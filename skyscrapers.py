@@ -77,7 +77,7 @@ def check_uniqueness_in_rows(board: list) -> bool:
     return True
 
 
-def check_horizontal_visibility(board: list):
+def check_horizontal_visibility(board: list) -> bool:
     """
     Check row-wise visibility (left-right and vice versa)
 
@@ -120,7 +120,7 @@ def check_horizontal_visibility(board: list):
     return True
 
 
-def check_columns(board: list):
+def check_columns(board: list) -> bool:
     """
     Check column-wise compliance of the board for uniqueness (buildings of unique height) and visibility (top-bottom and vice versa).
 
@@ -133,7 +133,31 @@ def check_columns(board: list):
     >>> check_columns(['***21**', '412553*', '423145*', '*543215', '*35214*', '*41532*', '*2*1***'])
     False
     """
-    pass
+    for j, pivot in enumerate(board[0][1:-1]):
+        if pivot.isnumeric():
+            pivot = int(pivot)
+            count = 1
+            highest = board[1][j]
+            for i in range(2, len(board)-1):
+                if board[i][j] > highest:
+                    highest = board[i][j]
+                    count += 1
+            if count != pivot:
+                return False
+
+    for j, pivot in enumerate(board[-1]):
+        if pivot.isnumeric():
+            pivot = int(pivot)
+            count = 1
+            highest = board[-1][j]
+            for i in range(len(board)-2, 1):
+                if board[i][j] > highest:
+                    highest = board[i][j]
+                    count += 1
+            if count != pivot:
+                return False
+
+    return True
 
 
 def check_skyscrapers(input_path: str):
