@@ -1,3 +1,7 @@
+"""
+This is the main module of the game.
+https://github.com/MykhailoSobko/skyscrapers
+"""
 def read_input(path: str) -> list:
     """
     Read game board file from path.
@@ -133,7 +137,7 @@ def check_columns(board: list) -> bool:
     >>> check_columns(['***21**', '412553*', '423145*', '*543215', '*35214*', '*41532*', '*2*1***'])
     False
     """
-    for j, pivot in enumerate(board[0][1:-1]):
+    for j, pivot in enumerate(board[0]):
         if pivot.isnumeric():
             pivot = int(pivot)
             count = 1
@@ -149,8 +153,8 @@ def check_columns(board: list) -> bool:
         if pivot.isnumeric():
             pivot = int(pivot)
             count = 1
-            highest = board[-1][j]
-            for i in range(len(board)-2, 1):
+            highest = board[-2][j]
+            for i in range(len(board)-2, 1, -1):
                 if board[i][j] > highest:
                     highest = board[i][j]
                     count += 1
@@ -160,7 +164,7 @@ def check_columns(board: list) -> bool:
     return True
 
 
-def check_skyscrapers(input_path: str):
+def check_skyscrapers(input_path: str) -> bool:
     """
     Main function to check the status of skyscraper game board.
     Return True if the board status is compliant with the rules,
@@ -169,12 +173,14 @@ def check_skyscrapers(input_path: str):
     >>> check_skyscrapers("check.txt")
     True
     """
-    pass
+    board = read_input(input_path)
+
+    return (check_not_finished_board(board)
+        and check_uniqueness_in_rows(board)
+        and check_horizontal_visibility(board)
+        and check_columns(board)
+        )
 
 
 if __name__ == "__main__":
     print(check_skyscrapers("check.txt"))
-
-
-import doctest
-doctest.testmod()
