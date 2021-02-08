@@ -182,6 +182,14 @@ def check_columns(board: list) -> bool:
             if count != pivot:
                 return False
 
+    for j in range(1, len(board)-1):
+        heights = set()
+        for i in range(1, len(board)-1):
+            if int(board[i][j]) not in heights:
+                heights.add(int(board[i][j]))
+            else:
+                return False
+
     return True
 
 
@@ -198,7 +206,3 @@ def check_skyscrapers(input_path: str) -> bool:
         and check_horizontal_visibility(board)
         and check_columns(board)
         )
-
-
-if __name__ == "__main__":
-    print(check_skyscrapers("check.txt"))
